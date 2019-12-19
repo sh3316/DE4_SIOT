@@ -16,7 +16,7 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig)
 
-schedule.scheduleJob("0 * * * * *", async function(){
+schedule.scheduleJob("0 */10 * * * *", async function(){
   try{
     var result = await axios.get(
       "https://api-nile.tfl.gov.uk/BikePoint?swLat=51.4671&swLon=-0.2053&neLat=51.5469&neLon=-0.0508&app_id=8268063a&app_key=14f7f5ff5d64df2e88701cef2049c804"
