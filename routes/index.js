@@ -37,10 +37,8 @@ schedule.scheduleJob("0 * * * * *", async function(){
         .ref("bikes/")
         .push(reducedData);
       console.log("save", new Date());
-      res.send(reducedData);
     } catch(err){
       console.log(err);
-      res.send(err);
     }
 })
 
