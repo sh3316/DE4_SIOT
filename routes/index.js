@@ -27,7 +27,8 @@ schedule. scheduleJob("0 0 * * * *", async function(){
         temperature: parseInt(target.temperatureC),
         timeslot: target.timeslot,
         weather: target.weatherTypeText,
-        localDate: target.localDate
+        localDate: target.localDate,
+        timestamp: moment(`${target.localDate} ${target.timeslot}`, "YYYY-MM-DD hh:mm").toDate().getTime()
       }
       firebase.database().ref("weathers/").push(data);
       console.log("weather", new Date());
@@ -92,7 +93,8 @@ router.get("/weathers", async function(req,res,next){
         temperature: parseInt(target.temperatureC),
         timeslot: target.timeslot,
         weather: target.weatherTypeText,
-        localDate: target.localDate
+        localDate: target.localDate,
+        timestamp: moment(`${target.localDate} ${target.timeslot}`, "YYYY-MM-DD hh:mm").toDate().getTime()
       }
       firebase.database().ref("weathers/").push(data);
       console.log("weather", new Date());
