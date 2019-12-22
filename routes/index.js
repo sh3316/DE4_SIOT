@@ -46,7 +46,7 @@ schedule.scheduleJob("0 */10 * * * *", async function(){
 router.get('/',async function(req, res, next) {
   try{
     var result = await axios.get(
-      "https://api-nile.tfl.gov.uk/BikePoint?swLat=51.4671&swLon=-0.2053&neLat=51.5469&neLon=-0.0508&app_id=8268063a&app_key=14f7f5ff5d64df2e88701cef2049c804"
+      "https://api-ganges.tfl.gov.uk/BikePoint?swLat=51.5022&swLon=-0.2225&neLat=51.5119&neLon=-0.0336&app_id=8268063a&app_key=14f7f5ff5d64df2e88701cef2049c804"
       );
       var reducedData = result.data.reduce(function(acc,cur){
         var data = {
