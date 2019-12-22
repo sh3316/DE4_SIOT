@@ -16,7 +16,26 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig)
-
+schedule. scheduleJob("0 0 * * * *", async function(){
+  try{
+    var result = await axios.get(
+      "https://weather-broker-cdn.api.bbci.co.uk/en/forecast/aggregated/2643743"
+    );
+       var target = result.data.forecasts[0].detailed.reports[0];
+       var data = {
+        humidity: parseInt(target.humidity),
+        temperature: parseInt(target.temeratureC),
+        timeslot: target.timeslot,
+        weather: target.weatherTypeText,
+        localDate: target.localDate
+      }
+      firebase.database().ref("weathers/").push(data);
+      console.log("weather", new Date());
+  }
+  catch(err){
+    console.log(err);
+  }
+})
 schedule.scheduleJob("0 */10 * * * *", async function(){
   try{
     var result = await axios.get(
@@ -61,6 +80,27 @@ router.get("/bikes", async function(req,res,next){
 query.once("value", function(snapshot) {
   res.send(snapshot);
 })
+})
+router.get("/weathers", async function(req,res,next){
+  try{
+    var result = await axios.get(
+      "https://weather-broker-cdn.api.bbci.co.uk/en/forecast/aggregated/2643743"
+    );
+       var target = result.data.forecasts[0].detailed.reports[0];
+       var data = {
+        humidity: parseInt(target.humidity),
+        temperature: parseInt(target.temeratureC),
+        timeslot: target.timeslot,
+        weather: target.weatherTypeText,
+        localDate: target.localDate
+      }
+      firebase.database().ref("weathers/").push(data);
+      console.log("weather", new Date());
+      res.send(data);
+  }
+  catch(err){
+    console.log(err);
+  }
 })
 /* GET home page. */
 router.get('/',async function(req, res, next) {
