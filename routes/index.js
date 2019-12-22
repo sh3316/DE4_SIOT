@@ -24,7 +24,7 @@ schedule. scheduleJob("0 0 * * * *", async function(){
        var target = result.data.forecasts[0].detailed.reports[0];
        var data = {
         humidity: parseInt(target.humidity),
-        temperature: parseInt(target.temeratureC),
+        temperature: parseInt(target.temperatureC),
         timeslot: target.timeslot,
         weather: target.weatherTypeText,
         localDate: target.localDate
@@ -89,7 +89,7 @@ router.get("/weathers", async function(req,res,next){
        var target = result.data.forecasts[0].detailed.reports[0];
        var data = {
         humidity: parseInt(target.humidity),
-        temperature: parseInt(target.temeratureC),
+        temperature: parseInt(target.temperatureC),
         timeslot: target.timeslot,
         weather: target.weatherTypeText,
         localDate: target.localDate
