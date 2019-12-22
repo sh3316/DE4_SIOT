@@ -1,6 +1,7 @@
 var express = require('express');
 var axios = require("axios");
 var router = express.Router();
+var moment = require("moment");
 var firebase = require("firebase/app");
 require("firebase/database");
 var schedule =require("node-schedule");
@@ -19,7 +20,7 @@ firebase.initializeApp(firebaseConfig)
 schedule.scheduleJob("0 */10 * * * *", async function(){
   try{
     var result = await axios.get(
-      "https://api-nile.tfl.gov.uk/BikePoint?swLat=51.4671&swLon=-0.2053&neLat=51.5469&neLon=-0.0508&app_id=8268063a&app_key=14f7f5ff5d64df2e88701cef2049c804"
+      "[윤환] [오후 1:22] https://api-ganges.tfl.gov.uk/BikePoint?swLat=51.5022&swLon=-0.2225&neLat=51.5119&neLon=-0.0336&app_id=8268063a&app_key=14f7f5ff5d64df2e88701cef2049c804"
       );
       var reducedData = result.data.reduce(function(acc,cur){
         var data = {
@@ -41,7 +42,26 @@ schedule.scheduleJob("0 */10 * * * *", async function(){
       console.log(err);
     }
 })
-
+router.get("/bikes", async function(req,res,next){
+  console.log(req.query);
+  var query = firebase
+  .database()
+  .ref("bikes/")
+  .orderByChild("date")
+  .startAt(
+    moment(req.query.start_date)
+    .toDate()
+    .getTime()
+  )
+  .endAt(
+    moment(req.query.end_date)
+    .toDate()
+    .getTime()
+  );
+query.once("value", function(snapshot) {
+  res.send(snapshot);
+})
+})
 /* GET home page. */
 router.get('/',async function(req, res, next) {
   try{
