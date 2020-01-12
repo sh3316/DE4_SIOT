@@ -12,7 +12,8 @@ var usersRouter = require("./routes/users");
 var app = express();
 
 setInterval(function() {
-  http.get("https://chrishuh7.herokuapp.com/");
+  http.get("http://chrishuh7.herokuapp.com/");
+  console.log('awake!');
 }, 300000); // every 5 minutes (300000)
 
 // view engine setup
